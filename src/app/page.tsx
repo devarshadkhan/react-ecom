@@ -6,14 +6,17 @@ import { Search, ChevronLeft, ChevronRight, Heart, ShoppingBag, User } from "luc
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { getAllProductsAPI } from "@/store/slices/products/getAllProducts"
-import type { AppDispatch } from "@/store/store"
+import type { AppDispatch, RootState } from "@/store/store"
 import makeApiRequest from "@/services/axiosInstance"
 import { apiEndPoints } from "@/services/apis"
+import Link from "next/link"
 export default function HomePage() {
   const dispatch = useDispatch<AppDispatch>()
-  
+   const getCategoryData = useSelector(
+    (state: RootState) => state?.getAllCategoty?.categories
+  );
 const [products, setProducts] = useState([]);
   const newArrivals = [
     {
@@ -23,6 +26,16 @@ const [products, setProducts] = useState([]);
     },
    
   ]
+const categoryImages: { [key: string]: string } = {
+  tv: "https://images.samsung.com/is/image/samsung/p6pim/in/ua43t5410akxxl/gallery/in-fhd-t5310-ua43t5410akxxl-532972655?$684_547_PNG$",
+  laptop: "https://www.livemint.com/lm-img/img/2025/02/21/600x338/best_laptop_under_Rs_30000_1740122015828_1740122045813.jpg",
+  audio: "https://shoopy.b-cdn.net/305289/SKU-1621_0-1730978221394.webp?format=webp",
+  mobile: "/images/electronics.jpg",
+  // fallback image
+  
+appliances: "https://cdn.firstcry.com/education/2023/01/13101355/Names-Of-Household-Appliances-In-English.jpg",
+  gaming: "https://dmrqkbkq8el9i.cloudfront.net/Pictures/480xany/9/2/3/347923_pcgamingsetuptech_450607.jpg",
+};
 
 
  useEffect(()=>{
@@ -172,7 +185,7 @@ const [products, setProducts] = useState([]);
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <div className="w-1 h-8 bg-purple-500"></div>
-            <h2 className="text-3xl font-bold text-gray-900">New Arrival</h2>
+            <h2 className="text-3xl font-bold text-gray-900">New Category</h2>
           </div>
           <div className="flex space-x-2">
             <Button variant="outline" size="icon">
@@ -185,22 +198,23 @@ const [products, setProducts] = useState([]);
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {products.map((item) => (
-            <Card key={item.id} className="group cursor-pointer hover:shadow-lg transition-shadow">
+          {getCategoryData?.categories?.map((item) => (
+           <Link href={`/products?type=${item}`} key={item}>
+            <Card key={"item"} className="group pt-0 cursor-pointer hover:shadow-lg transition-shadow">
               <CardContent className="p-0">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-t-lg">
+                <div className="relative  overflow-hidden  w-full h-[200px] rounded-t-lg">
                   <img
-                    src={item.image || "/placeholder.svg"}
+                    src={categoryImages[item] || "/placeholder.svg"}
                     alt={item.title}
                   
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300 w-full"
                   />
                 </div>
                 <div className="p-4 text-center">
-                  <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                  <h3 className="font-semibold text-gray-900 capitalize">{item}</h3>
                 </div>
               </CardContent>
-            </Card>
+            </Card></Link>
           ))}
 
         </div>

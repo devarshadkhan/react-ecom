@@ -74,6 +74,36 @@ useEffect(() => {
     setPage(event.selected + 1); // react-paginate is 0-based
   };
 
+   const priceRanges = [
+    { label: "All", min: 0, max: Infinity },
+    { label: "Under $500", min: 0, max: 500 },
+    { label: "$500 - $1000", min: 500, max: 1000 },
+    { label: "$1000 - $2000", min: 1000, max: 2000 },
+    { label: "Above $2000", min: 2000, max: Infinity },
+  ];
+
+const [selectedRange, setSelectedRange] = useState("");
+const [filteredProducts, setFilteredProducts] = useState([]);
+useEffect(() => {
+    if (selectedRange) {
+      const selected = priceRanges.find((range) => range.label === selectedRange);
+      const filtered = products.filter(
+        (item) => item.price >= selected.min && item.price <= selected.max
+      );
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
+    }
+    }, [selectedRange, products]);
+   const handleChange = (e) => {
+    const selected = priceRanges.find((range) => range.label === e.target.value);
+    setSelectedRange(selected.label);
+
+    const filtered = products.filter(
+      (item) => item.price >= selected.min && item.price <= selected.max
+    );
+    setFilteredProducts(filtered);
+  };
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-6">
@@ -102,7 +132,7 @@ useEffect(() => {
                       >
                         <Link
                           href={`/products?type=${item}`}
-                          className={`text-sm hover:text-gray-900 transition-all ${
+                          className={`text-sm hover:text-gray-900 transition-all capitalize ${
                             isActive
                               ? "text-blue-600 font-semibold underline"
                               : "text-gray-700"
@@ -126,6 +156,25 @@ useEffect(() => {
                   </h4>
 
                 </div> */}
+
+                <div className="mb-6">
+  <label htmlFor="price-filter" className="block text-sm font-medium text-gray-700 mb-2">
+    Filter by Price
+  </label>
+  <select
+    id="price-filter"
+    value={selectedRange}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-md p-2"
+  >
+    {priceRanges.map((range) => (
+      <option key={range.label} value={range.label}>
+        {range.label}
+      </option>
+    ))}
+  </select>
+</div>
+
               </CardContent>
             </Card>
           </div>
@@ -141,7 +190,7 @@ useEffect(() => {
 
             {/* Product Grid */}
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {products.map((product: any) => {
+              {filteredProducts.map((product: any) => {
                 return (
                   <>
                     {" "}

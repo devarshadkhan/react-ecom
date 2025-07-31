@@ -28,14 +28,12 @@ interface CartItem {
 }
 
 export default function CartPage() {
-  const [showAlert, setShowAlert] = useState(true);
   const [couponCode, setCouponCode] = useState("");
 
   const applyCoupon = () => {
     // Coupon logic would go here
     console.log("Applying coupon:", couponCode);
   };
-
   const cartItems = useSelector((state: RootState) => state.cartSlice.items);
   console.log("cartItems:", cartItems);
 
@@ -67,43 +65,13 @@ export default function CartPage() {
   );
   const grandTotal = subtotal + totalShipping;
 
+
+ 
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Alert Banner */}
-        {showAlert && (
-          <Alert className="mb-6 border-cyan-200 bg-cyan-50">
-            <AlertDescription className="flex items-center justify-between">
-              <div>
-                <nav className="flex items-center space-x-2 text-sm mb-2">
-                  <Link href="/" className="text-cyan-600 hover:underline">
-                    Home
-                  </Link>
-                  <ChevronRight className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-900 font-medium">Add To Cart</span>
-                </nav>
-                <p className="text-sm text-gray-700">
-                  Please fill in the fields below and click place order to
-                  complete your purchase.{" "}
-                  <span className="text-cyan-600">Already registered?</span>{" "}
-                  <Link
-                    href="/login"
-                    className="text-cyan-600 hover:underline font-medium"
-                  >
-                    Please login here
-                  </Link>
-                </p>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowAlert(false)}
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </AlertDescription>
-          </Alert>
-        )}
+       
 
         {/* Cart Table Header */}
         <div className="bg-gray-700 text-white px-6 py-4 rounded-t-lg">

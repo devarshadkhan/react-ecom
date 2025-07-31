@@ -19,6 +19,7 @@ import type { AppDispatch, RootState } from "@/store/store";
 import { getAllProductsCategoryAPI } from "@/store/slices/category/getAllCategory";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Badge } from "../ui/badge";
 const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const getCategoryData = useSelector(
@@ -51,7 +52,7 @@ const Navbar = () => {
                   <Link
             key={item}
             href={`/products?type=${item}`}
-            className={`text-sm hover:text-gray-900 transition-all ${
+            className={`text-sm hover:text-gray-900 transition-all capitalize ${
               isActive ? 'text-blue-600 font-semibold underline' : 'text-gray-700'
             }`}
           >
@@ -74,8 +75,10 @@ const Navbar = () => {
             <Button variant="ghost" size="icon">
               <User className="w-5 h-5" />
             </Button>
-            <Link href={"/cart"} >
-              <ShoppingBag className="w-5 h-5" /> {totalItems}
+            <Link href={"/cart"} className="h-auto ">
+              <ShoppingBag className="w-5 h-5" /> <Badge className=" relative bottom-6 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs rounded-full px-1">
+                {totalItems}
+                </Badge>
             </Link>
           </div>
         </div>
