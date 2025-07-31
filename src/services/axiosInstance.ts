@@ -1,28 +1,3 @@
-// // lib/api.ts
-// import axios from "axios";
-
-// const axiosInstance = axios.create({
-//   baseURL: "https://fakestoreapi.com/",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
-
-// const makeApiRequest = async (url: string, method: "GET" | "POST" = "GET", data?: unknown) => {
-//   try {
-//     const response = await axiosInstance({
-//       url,
-//       method,
-//       data,
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error("API Error:", error);
-//     throw error;
-//   }
-// };
-
-// export default makeApiRequest;
 
 
 

@@ -26,16 +26,15 @@ const Navbar = () => {
     (state: RootState) => state?.getAllCategoty?.categories
   );
   const searchParams = useSearchParams();
-  const currentType = searchParams.get('type'); 
+  const currentType = searchParams.get("type");
 
   useEffect(() => {
     dispatch(getAllProductsCategoryAPI());
   }, []);
 
   const totalItems = useSelector((state) =>
-  state.cartSlice.items.reduce((acc, item) => acc + item.quantity, 0)
-);
-
+    state.cartSlice.items.reduce((acc, item) => acc + item.quantity, 0)
+  );
 
   return (
     <>
@@ -43,21 +42,25 @@ const Navbar = () => {
       <header className="border-b border-gray-200 px-4 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-8">
-            <Link className="text-2xl font-bold text-gray-900" href={"/"}>Euphoria</Link>
+            <Link className="text-2xl font-bold text-gray-900" href={"/"}>
+              Euphoria
+            </Link>
             <nav className="hidden md:flex items-center space-x-6">
               {getCategoryData?.categories?.map((item: string) => {
-                 const isActive = currentType === item;
+                const isActive = currentType === item;
                 return (
                   <>
-                  <Link
-            key={item}
-            href={`/products?type=${item}`}
-            className={`text-sm hover:text-gray-900 transition-all capitalize ${
-              isActive ? 'text-blue-600 font-semibold underline' : 'text-gray-700'
-            }`}
-          >
-            {item}
-          </Link>
+                    <Link
+                      key={item}
+                      href={`/products?type=${item}`}
+                      className={`text-sm hover:text-gray-900 transition-all capitalize ${
+                        isActive
+                          ? "text-blue-600 font-semibold underline"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      {item}
+                    </Link>
                   </>
                 );
               })}
@@ -76,9 +79,10 @@ const Navbar = () => {
               <User className="w-5 h-5" />
             </Button>
             <Link href={"/cart"} className="h-auto ">
-              <ShoppingBag className="w-5 h-5" /> <Badge className=" relative bottom-6 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs rounded-full px-1">
+              <ShoppingBag className="w-5 h-5" />{" "}
+              <Badge className=" relative bottom-6 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs rounded-full px-1">
                 {totalItems}
-                </Badge>
+              </Badge>
             </Link>
           </div>
         </div>
